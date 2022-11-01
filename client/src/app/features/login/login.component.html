@@ -1,0 +1,48 @@
+<div class="bg">
+  <div class="container">
+    <form [formGroup]="regForm" class="signUp" [ngClass]="login ? 'inactive-sx' : 'active-sx'">
+      <h1>Create New Account<span>.</span></h1>
+      <p class="already">Already A Mamber <span (click)="clickForm()">Login in</span></p>
+      <div class="input"> 
+        <p>UserName</p>
+        <div>
+          <input formControlName="username" type="text">
+          <fa-icon [icon]="faUser"></fa-icon>
+        </div>
+      </div>
+      <div class="fullname-wrapper">
+        <div>
+          <p>First name</p>
+          <div>
+            <input formControlName="firstName" type="text">
+            <fa-icon [icon]="faIdCard"></fa-icon>
+          </div>
+        </div>
+        <div>
+          <p>First name</p>
+          <div>
+            <input formControlName="lastName" type="text">
+            <fa-icon [icon]="faIdCard"></fa-icon>
+          </div>
+        </div>
+      </div>
+      <div class="input"> 
+        <p>Email</p>
+        <div>
+          <input formControlName="email" type="text">
+          <fa-icon [icon]="faEnvelope"></fa-icon>
+        </div>
+      </div>
+      <div class="input"> 
+        <p>Password</p>
+        <div>
+          <input formControlName="password" type="password">
+          <fa-icon [icon]="faKey"></fa-icon>
+        </div>
+      </div>
+      <button class="regBtn" (click)="onRegister()">Registration</button>
+    </form>
+    <form class="signIn" [ngClass]="login ? 'active-sx' : 'inactive-sx'">
+    </form>
+</div>
+</div>
