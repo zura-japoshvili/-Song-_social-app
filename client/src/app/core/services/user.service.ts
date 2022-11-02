@@ -1,3 +1,4 @@
+import { loginInt } from './../interfaces/loginInt';
 import { userRegInt } from './../interfaces/userRegInt';
 import { userDataInt } from './../interfaces/userDataInt';
 import { HttpClient } from '@angular/common/http';
@@ -20,5 +21,9 @@ export class UserService {
         })
       })
     );
+  }
+
+  public getUser(data: loginInt): Observable<userDataInt> {
+   return  this.http.post<userDataInt>('http://localhost:8800/api/auth/login',data);
   }
 }

@@ -1,9 +1,10 @@
+import { loginInt } from './../../core/interfaces/loginInt';
 import { UserService } from './../../core/services/user.service';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { faIdCard, faEnvelope, faKey, faUser } from '@fortawesome/free-solid-svg-icons';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { userRegInt } from 'src/app/core/interfaces/userRegInt';
-import { tap, catchError, of } from 'rxjs';
+import { tap, catchError, of, delay } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -18,8 +19,13 @@ export class LoginComponent implements OnInit {
   faKey = faKey
   faUser = faUser
   
+  logEmailAlert = false;
+  logPassAlert = false;
+
   login: boolean = false;
 
+  
+  
   public regForm = new FormGroup(
     {
       username: new FormControl('', Validators.required),
@@ -29,6 +35,11 @@ export class LoginComponent implements OnInit {
       password: new FormControl('', Validators.required)
     }
   ) 
+
+  public loginForm = new FormGroup({
+    email: new FormControl('', Validators.required),
+    password: new FormControl('', Validators.required)
+  })
 
   constructor(private userService: UserService) { }
 
@@ -41,7 +52,6 @@ export class LoginComponent implements OnInit {
   }
 
   public onRegister(){
-    
     this.userService.postUser(this.regForm.value as userRegInt).pipe( 
       tap((data) => {
         
@@ -52,4 +62,18 @@ export class LoginComponent implements OnInit {
       })
     ).subscribe();
   }
+
+  public onLogin(){
+    this.userService.getUser(this.loginForm.value as loginInt).pipe(
+      tap((data) => {
+
+      }),
+      catchError(err => {
+        err.error == 'Email not found' ? this.logEmailAlert = true : this.logEmailAlert = false;
+        err.error == 'Wrong password' ? this.logPassAlert = true : this.logPassAlert = false;
+        return of ([]);
+      })
+    ).subscribe()
+  }
+  
 }

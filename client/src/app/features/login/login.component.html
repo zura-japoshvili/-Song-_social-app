@@ -2,7 +2,7 @@
   <div class="container">
     <form [formGroup]="regForm" class="signUp" [ngClass]="login ? 'inactive-sx' : 'active-sx'">
       <h1>Create New Account<span>.</span></h1>
-      <p class="already">Already A Mamber <span (click)="clickForm()">Login in</span></p>
+      <p class="already">Already A Member <span (click)="clickForm()">Login in</span></p>
       <div class="input"> 
         <p>UserName</p>
         <div>
@@ -42,7 +42,26 @@
       </div>
       <button class="regBtn" (click)="onRegister()">Registration</button>
     </form>
-    <form class="signIn" [ngClass]="login ? 'active-sx' : 'inactive-sx'">
+    <form [formGroup]="loginForm" class="signIn" [ngClass]="login ? 'active-sx' : 'inactive-sx'">
+      <h1>Sign in to your account<span>.</span></h1>
+      <p class="already">Don't have an account?<span (click)="clickForm()">Sign up</span></p>
+      <div class="input">
+        <p>Email</p>
+        <div>
+          <input formControlName="email" type="text">
+          <fa-icon [icon]="faEnvelope"></fa-icon>
+        </div>
+      </div>
+      <p *ngIf="logEmailAlert" class="alert">Email is invalid</p>
+      <div class="input">
+        <p>Password</p>
+        <div>
+          <input formControlName="password" type="password">
+          <fa-icon [icon]="faKey"></fa-icon>
+        </div>
+      </div>
+      <p *ngIf="logPassAlert"  class="alert">Password is incorrect</p>
+      <button class="regBtn" (click)="onLogin()">Sign In</button>
     </form>
 </div>
 </div>
