@@ -1,3 +1,4 @@
+import { NotFoundComponent } from './shared/not-found/not-found.component';
 import { NgModule } from '@angular/core';
 import {Routes, RouterModule,} from "@angular/router";
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -13,6 +14,17 @@ const routes: Routes = [
     {
         path: 'login',
         component: LoginComponent
+    },
+    {
+        path: 'profile/:username',
+        loadChildren: () => 
+            import('./features/profile/profile.module').then(
+                (res) => res.ProfileModule
+            )
+    },
+    { 
+        path: '**',
+        component: NotFoundComponent
     }
 ]
 

@@ -14,6 +14,22 @@ router.put("/:id", async (req, res) => {
     }
 })
 
+
+router.get("/profile/:userName", async (req, res) => {
+    try {
+        const user = await User.findOne({username: req.params.userName});
+        if(user){
+            res.status(200).json(user);
+        }
+        else{
+            return res.status(404).json('User Not Found');
+        }
+    } catch (error) {
+        res.status(500).json(error);
+    }
+})
+
+
 router.put("/:id/follow", async (req, res) => {
     try {
         const user = await User.findById(req.params.id);
