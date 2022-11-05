@@ -22,6 +22,13 @@ const routes: Routes = [
                 (res) => res.ProfileModule
             )
     },
+    {
+        path: 'chat',
+        loadChildren: () => 
+            import('./features/chat/chat.module').then(
+                (res) => res.ChatModule
+            )
+    },
     { 
         path: '**',
         component: NotFoundComponent
