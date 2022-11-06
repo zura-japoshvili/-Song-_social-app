@@ -27,6 +27,14 @@ export class UserService {
    return  this.http.post<userDataInt>('http://localhost:8800/api/auth/login',data);
   }
 
+  public getUserData(userId: string): any {
+    return this.http.get("http://localhost:8800/api/users?userId="+ userId);
+  }
+
+  public getAllUsers(): Observable<userDataInt []>{
+    return this.http.get<userDataInt []>("http://localhost:8800/api/users/getAllUsers");
+  }
+
   public loadUser(username: string): Observable<userDataInt> {
     return this.http.get<userDataInt>('http://localhost:8800/api/users/profile/'+ username).pipe(
       catchError(() => {
