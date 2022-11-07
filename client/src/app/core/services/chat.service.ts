@@ -20,9 +20,12 @@ export class ChatService {
   }
 
   newMessage(message: messageInt){
-    this.http.post("http://localhost:8800/api/messages/", message);
+    this.http.post("http://localhost:8800/api/messages/", message).subscribe((value) => {
+      console.log(value);
+      
+    })
   }
-  getUserMessage(convesationId: string){
-    this.http.get("http://localhost:8800/api/messages/" + convesationId);
+  getUserMessage(convesationId: string): Observable<messageInt[]>{
+    return this.http.get<messageInt []>("http://localhost:8800/api/messages/" + convesationId);
   }
 }

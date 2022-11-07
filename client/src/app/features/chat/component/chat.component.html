@@ -3,18 +3,16 @@
       <section class="discussions">
         <div class="discussion search">
           <div class="searchbar">
-            <i class="fa fa-search" aria-hidden="true"></i>
+            <fa-icon [icon]="faSearch"></fa-icon>
             <input type="text" placeholder="Search...">
           </div>
         </div>
         <ng-container *ngFor="let User of data">
-          <p>{{ User.user.username }}</p>
-          <div class="discussion message-active" (click)="z(User)">
-            <div class="photo" style="background-image: url(https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80);">
-              <div class="online"></div>
-            </div>
+
+          <div class="discussion message-active" (click)="openConv(User)">
+            <img class="photo" [src]="User.user.profilePicture ? User.user.profilePicture : '../../../../assets/public/images/default-user-img.png'" alt="">
             <div class="desc-contact">
-              <p class="name"></p>
+              <p class="name">{{ User.user.firstName +  " " + User.user.lastName }}</p>
               <p class="message">9 pm at the bar if possible 😳</p>
             </div>
             <div class="timer">12 sec</div>
@@ -44,48 +42,45 @@
       </section>
       <section class="chat">
         <div class="header-chat">
-          <i class="icon fa fa-user-o" aria-hidden="true"></i>
-          <p class="name">Megan Leib</p>
-          <i class="icon clickable fa fa-ellipsis-h right" aria-hidden="true"></i>
+          <ng-container *ngIf="openChatInfo">
+            <i class="icon fa fa-user-o" aria-hidden="true"></i>
+            <img class="profile-img" [src]="openChatInfo.user.profilePicture ? openChatInfo.user.profilePicture : '../../../../assets/public/images/default-user-img.png'" alt="">
+            <p class="name">{{ openChatInfo.user.firstName +  " " + openChatInfo.user.lastName }}</p>
+            <i class="icon clickable fa fa-ellipsis-h right" aria-hidden="true"></i>
+          </ng-container>
         </div>
         <div class="messages-chat">
-          <ng-container>
-            
+          <ng-container *ngFor="let data of messages">
+            <ng-container *ngIf="data.senderId === currentUser; else sender">
+              <div class="message text-only">
+                <div class="response">
+                  <p class="text">{{ data.text }}</p>
+                </div>
+              </div>
+            </ng-container>
+            <ng-template #sender>
+              <div class="message">
+                <img class="photo" [src]="openChatInfo.user.profilePicture ? openChatInfo.user.profilePicture : '../../../../assets/public/images/default-user-img.png'" alt="" alt="">
+                <!-- <div class="photo" style="background-image: url(https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80);">
+                  <div class="online"></div>
+                </div> -->
+                <p class="text"> {{ data.text }} </p>
+              </div>
+            </ng-template>
           </ng-container>
-          <div class="message">
-            <div class="photo" style="background-image: url(https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80);">
-              <div class="online"></div>
-            </div>
-            <p class="text"> Hi, how are you ? </p>
-          </div>
-          <div class="message text-only">
-            <p class="text"> What are you doing tonight ? Want to go take a drink ?</p>
-          </div>
-          <p class="time"> 14h58</p>
-          <div class="message text-only">
-            <div class="response">
-              <p class="text"> Hey Megan ! It's been a while 😃</p>
-            </div>
-          </div>
-          <div class="message text-only">
-            <div class="response">
-              <p class="text"> When can we meet ?</p>
-            </div>
-          </div>
-          <p class="response-time time"> 15h04</p>
+          <!-- <p class="response-time time"> 15h04</p>
           <div class="message">
             <div class="photo" style="background-image: url(https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80);">
               <div class="online"></div>
             </div>
             <p class="text"> 9 pm at the bar if possible 😳</p>
           </div>
-          <p class="time"> 15h09</p>
+          <p class="time"> 15h09</p> -->
 
         </div>
         <div class="footer-chat">
-          <i class="icon fa fa-smile-o clickable" style="font-size:25pt;" aria-hidden="true"></i>
-          <input type="text" class="write-message" placeholder="Type your message here">
-          <i class="icon send fa fa-paper-plane-o clickable" aria-hidden="true"></i>
+          <input [formControl]="messageInput" type="text" class="write-message" placeholder="Type your message here">
+          <fa-icon (click)="sendMessage()" class="icon send clickable" [icon]="faPaperPlane"></fa-icon>
         </div>
       </section>
     </div>
