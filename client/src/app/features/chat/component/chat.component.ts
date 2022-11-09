@@ -24,23 +24,29 @@ export class ChatComponent implements OnInit {
   // FontAwesome Icons
   public faSearch = faSearch;
   public faPaperPlane = faPaperPlane;
+  
 
-  currentUser = "63612d68c7f18ca0d1cf5d73";
+  user: userDataInt = JSON.parse(localStorage.getItem('User')!);
+  currentUserId = this.user._id;
   public data!: conversationInt[]
   public messages!: messageInt[]
   public openChatInfo!: conversationInt
-  
+  public messageList: string[] = [];
+
   public messageInput = new FormControl<string>("", Validators.required);
 
-  ngOnInit(): void {
+  ngOnInit(): void { 
+
+    this._chatService.addUser(this.currentUserId);
+    this._chatService.addUser('63613b90c7f18ca0d1cf5d7d')
     forkJoin({
-      conversations: this._chatService.getConversations(this.currentUser),
+      conversations: this._chatService.getConversations(this.currentUserId),
       users: this._userService.getAllUsers(),
     }).pipe(map((value) => {
       
       let convUsers: any  = []
       value.conversations.forEach((param, index) => {
-        if(param.members[0] !== this.currentUser){
+        if(param.members[0] !== this.currentUserId){
           convUsers.push( {
             conversationId: param._id, 
             user: value.users.find(value => value._id === param.members[0])
@@ -64,7 +70,6 @@ export class ChatComponent implements OnInit {
   openConv(data: conversationInt){
     this.openChatInfo = data;
     this._chatService.getUserMessage(data.conversationId).subscribe((value) => {
-      console.log(value);
       this.messages = value;
       this._change.markForCheck();   
     })
@@ -73,7 +78,7 @@ export class ChatComponent implements OnInit {
   sendMessage(){
     this._chatService.newMessage({
       conversationId: this.openChatInfo.conversationId, 
-      senderId: this.currentUser, 
+      senderId: this.currentUserId, 
       text: this.messageInput.value
     })    
   }

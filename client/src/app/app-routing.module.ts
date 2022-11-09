@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import {Routes, RouterModule,} from "@angular/router";
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './features/login/login.component';
+import { LoggedInGuard } from './core/guards/logged-in.guard';
 
 
 const routes: Routes = [
@@ -20,14 +21,16 @@ const routes: Routes = [
         loadChildren: () => 
             import('./features/profile/profile.module').then(
                 (res) => res.ProfileModule
-            )
+            ),
+        canActivate: [LoggedInGuard]
     },
     {
         path: 'chat',
         loadChildren: () => 
             import('./features/chat/chat.module').then(
                 (res) => res.ChatModule
-            )
+            ),
+        canActivate: [LoggedInGuard]
     },
     { 
         path: '**',

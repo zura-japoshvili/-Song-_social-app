@@ -1,10 +1,13 @@
+import { Router } from '@angular/router';
+import { userDataInt } from './../../core/interfaces/userDataInt';
 import { loginInt } from './../../core/interfaces/loginInt';
 import { UserService } from './../../core/services/user.service';
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { faIdCard, faEnvelope, faKey, faUser } from '@fortawesome/free-solid-svg-icons';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { userRegInt } from 'src/app/core/interfaces/userRegInt';
 import { tap, catchError, of, delay } from 'rxjs';
+
 
 @Component({
   selector: 'app-login',
@@ -41,7 +44,11 @@ export class LoginComponent implements OnInit {
     password: new FormControl('', Validators.required)
   })
 
-  constructor(private userService: UserService) { }
+  constructor(
+    private _userService: UserService, 
+    private _change: ChangeDetectorRef,
+    private _router: Router
+    ) { }
 
   ngOnInit(): void {
   }
@@ -52,7 +59,7 @@ export class LoginComponent implements OnInit {
   }
 
   public onRegister(){
-    this.userService.postUser(this.regForm.value as userRegInt).pipe( 
+    this._userService.postUser(this.regForm.value as userRegInt).pipe( 
       tap((data) => {
         
       }),
@@ -64,13 +71,15 @@ export class LoginComponent implements OnInit {
   }
 
   public onLogin(){
-    this.userService.getUser(this.loginForm.value as loginInt).pipe(
+    this._userService.getUser(this.loginForm.value as loginInt).pipe(
       tap((data) => {
-
+        localStorage.setItem("User", JSON.stringify(data));
+        this._router.navigateByUrl('/chat').then();
       }),
       catchError(err => {
         err.error == 'Email not found' ? this.logEmailAlert = true : this.logEmailAlert = false;
         err.error == 'Wrong password' ? this.logPassAlert = true : this.logPassAlert = false;
+        this._change.markForCheck();
         return of ([]);
       })
     ).subscribe()

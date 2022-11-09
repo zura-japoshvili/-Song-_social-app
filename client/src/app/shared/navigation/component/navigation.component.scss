@@ -1,0 +1,128 @@
+@import url("https://fonts.googleapis.com/css?family=Lato:400,700");
+
+//color/ui color variables
+$white: #ececec;
+$black: #111111;
+$red1: #e74c3c;
+$red2: #c92918;
+$colorPrimary: $red1;
+$colorSecondary: $red2;
+$cubic-bezier: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+
+header{
+    height: 60px;
+    position: relative;
+    nav{
+        top: 0;
+        position: fixed;
+        height: 60px;
+        width: 100%;
+        background-color: #4392F1;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        //split button mixin
+        .user-info{
+          display: flex;
+          align-items: center;
+          margin-right: 15px;
+          p{
+            margin-right: 10px;
+            color: #ffff;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+          }
+          img{
+            cursor: pointer;
+            width: 50px;
+            height: 50px;
+            border: 1px solid #69df6f;
+            border-radius: 50%;
+          }
+        }
+        .logout {
+            font-family: "Lato", sans-serif;
+            text-transform: uppercase;
+            text-decoration: none;
+            font-weight: 700;
+            border: 0;
+            cursor: pointer;
+            //display: block;
+            position: absolute;
+            letter-spacing: 0.15em;
+            margin: 1px 0;
+            padding: 0.9rem 1.5rem;
+            background: transparent;
+            outline: none;
+            font-size: 18px;
+            color: #ECE8EF;
+            left: 3px;
+            transition: all 0.5s $cubic-bezier 0.15s;
+            &::after,
+            &::before {
+                border: 0;
+                content: "";
+                position: absolute;
+                height: 40%;
+                width: 10%;
+                transition: all 0.5s $cubic-bezier;
+                z-index: -2;
+                border-radius: 50%;
+                //animation: grow 1s infinite;
+            }
+            &::before {
+                border: 0;
+                background-color: #c92918;
+                top: -0.75rem;
+                left: 0.5rem;
+                animation: topAnimation 2s $cubic-bezier 0.25s infinite alternate;
+            }
+            &::after {
+                background-color: #e74c3c;
+                top: 3rem;
+                left: 10rem;
+                animation: bottomAnimation 2s $cubic-bezier 0.5s infinite alternate;
+            }
+            &:hover {
+                color: white;
+                &::before,
+                &::after {
+                top: 0;
+                //transform: skewx(-10deg);
+                height: 100%;
+                width: 100%;
+                border-radius: 0;
+                animation: none;
+                }
+                &::after {
+                left: 0rem;
+                }
+                &::before {
+                top: 0.5rem;
+                left: 0.35rem;
+                }
+            }
+            }
+    }
+}
+
+
+@keyframes topAnimation {
+    from {
+      transform: translate(0rem, 0);
+    }
+    to {
+      transform: translate(0rem, 2.5rem);
+    }
+  }
+  @keyframes bottomAnimation {
+    from {
+      transform: translate(-7rem, 0);
+    }
+    to {
+      transform: translate(0rem, 0);
+    }
+  }
+  

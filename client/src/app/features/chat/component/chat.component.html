@@ -1,3 +1,4 @@
+<app-navigation></app-navigation>
 <div class="container">
     <div class="row">
       <section class="discussions">
@@ -51,7 +52,7 @@
         </div>
         <div class="messages-chat">
           <ng-container *ngFor="let data of messages">
-            <ng-container *ngIf="data.senderId === currentUser; else sender">
+            <ng-container *ngIf="data.senderId === currentUserId; else sender">
               <div class="message text-only">
                 <div class="response">
                   <p class="text">{{ data.text }}</p>
