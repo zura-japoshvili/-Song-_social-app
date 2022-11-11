@@ -1,0 +1,45 @@
+<app-navigation></app-navigation>
+<div class="container">
+    <div class="row">
+      <section class="discussions">
+        <div class="discussion search">
+          <div class="searchbar">
+            <fa-icon [icon]="faSearch"></fa-icon>
+            <input type="text" placeholder="Search...">
+          </div>
+        </div>
+        <ng-container *ngFor="let User of data">
+          <div class="discussion message-active" (click)="openConv(User)">
+            <img class="photo" [src]="User.user.profilePicture ? User.user.profilePicture : '../../../../assets/public/images/default-user-img.png'" alt="">
+            <div class="desc-contact">
+              <p class="name">{{ User.user.firstName +  " " + User.user.lastName }}</p>
+              <p class="message">9 pm at the bar if possible 😳</p>
+            </div>
+            <div class="timer">12 sec</div>
+          </div>
+        </ng-container>
+        <!-- <div class="discussion message-active">
+          <div class="photo" style="background-image: url(https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80);">
+            <div class="online"></div>
+          </div>
+          <div class="desc-contact">
+            <p class="name">Megan Leib</p>
+            <p class="message">9 pm at the bar if possible 😳</p>
+          </div>
+          <div class="timer">12 sec</div>
+        </div> -->
+
+        <div class="discussion">
+          <div class="photo" style="background-image: url(https://images.unsplash.com/photo-1435348773030-a1d74f568bc2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1050&q=80);">
+            <div class="online"></div>
+          </div>
+          <div class="desc-contact">
+            <p class="name">Paul Walker</p>
+            <p class="message">You can't see me</p>
+          </div>
+          <div class="timer">1 week</div>
+        </div>
+      </section>
+      <app-message-chat></app-message-chat>
+    </div>
+  </div>

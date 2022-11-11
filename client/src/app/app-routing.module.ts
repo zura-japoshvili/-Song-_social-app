@@ -18,7 +18,7 @@ const routes: Routes = [
     },
     {
         path: 'profile/:username',
-        loadChildren: () => 
+        loadChildren: () =>
             import('./features/profile/profile.module').then(
                 (res) => res.ProfileModule
             ),
@@ -26,13 +26,13 @@ const routes: Routes = [
     },
     {
         path: 'chat',
-        loadChildren: () => 
-            import('./features/chat/chat.module').then(
+        loadChildren: () =>
+            import('./features/chat/module/chat.module').then(
                 (res) => res.ChatModule
             ),
         canActivate: [LoggedInGuard]
     },
-    { 
+    {
         path: '**',
         component: NotFoundComponent
     }
@@ -45,6 +45,6 @@ const routes: Routes = [
     ],
     exports: [RouterModule]
   })
-  
-  
+
+
   export class AppRoutingModule { }

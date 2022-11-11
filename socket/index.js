@@ -26,6 +26,15 @@ io.on("connection", (socket) => {
         io.emit("getUsers", users);
     })
 
+    socket.on('sendMessage', ({senderId, receiverId, text}) => {
+        const user = getUser(receiverId);
+        console.log('messigi migebulia')
+        io.emit(user.senderId).emit("getMessage", {
+            senderId, 
+            text
+        })
+    })
+
     socket.on("disconnect" , () =>{
         removeUser(socket.id);
         io.emit("getUsers", users);

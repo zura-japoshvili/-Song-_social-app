@@ -7,23 +7,40 @@ import { Injectable } from '@angular/core';
 import { io } from 'socket.io-client';
 import { BehaviorSubject } from 'rxjs';
 
+
 @Injectable({
   providedIn: 'root'
 })
 export class ChatService {
-  public message$: BehaviorSubject<string> = new BehaviorSubject('');
+  public message$: BehaviorSubject<messageInt | null> = new BehaviorSubject<messageInt| null>(null!);
   constructor(private http: HttpClient) { }
 
-  socket = io('ws://localhost:8900');
+  public socket = io('ws://localhost:8900');
 
-  public addUser(userId: string){
-    console.log(userId);
-    
+  public addUser(userId: string){    
     this.socket.emit("addUser", userId);
-    this.socket.on("getUsers", users => {
-      console.log(users);
-    }) 
   }
+  
+
+
+  // this.socket.on("getUsers", users => {
+  //   console.log(users);
+  // }) 
+
+  
+
+  public getNewMessage = () => {
+
+    
+    this.socket.on("getMessage", (data) => {
+      console.log(12312312312);
+      this.message$.next(data);
+      
+    })
+    
+    return this.message$.asObservable();
+  };
+
 
 
   getConversations(userId: string): Observable<getConvInt[]>{
@@ -33,10 +50,14 @@ export class ChatService {
     this.http.post("http://localhost:8800/api/conversations/", data);
   }
 
-  newMessage(message: messageInt){
-    this.http.post("http://localhost:8800/api/messages/", message).subscribe((value) => {
-      console.log(value);
-      
+  newMessage(message: messageInt, receiverId: string): Observable<messageInt>{
+    return this.http.post<messageInt>("http://localhost:8800/api/messages/", message).pipe((value) => {
+      this.socket.emit('sendMessage', {
+        senderId: message.senderId,
+        receiverId: receiverId,
+        text: message.text
+      });
+      return value
     })
   }
   getUserMessage(convesationId: string): Observable<messageInt[]>{
