@@ -1,0 +1,9 @@
+<div class="users-list">
+  <h1>Users List</h1>
+  <ng-container *ngFor="let user of newList">
+    <div class="user-item">
+      <p class="name">{{ user.firstName + " " + user.lastName }}</p>
+      <p class="active">Active <fa-icon class="active-icon" [icon]="faCircle"></fa-icon></p>
+    </div>
+  </ng-container>
+</div>

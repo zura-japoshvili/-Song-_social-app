@@ -27,17 +27,16 @@ export class ChatComponent implements OnInit {
 
 
   user: userDataInt = JSON.parse(localStorage.getItem('User')!);
-  @Input() currentUserId = this.user._id;
-  @Input() messages!: messageInt[]
-  @Input()  openChatInfo!: conversationInt
+  currentUserId = this.user._id;
+  messages!: messageInt[]
+  openChatInfo!: conversationInt
+
   public data!: conversationInt[]
 
 
 
 
   ngOnInit(): void {
-
-    this._chatService.addUser(this.currentUserId);
     forkJoin({
       conversations: this._chatService.getConversations(this.currentUserId),
       users: this._userService.getAllUsers(),
@@ -59,20 +58,10 @@ export class ChatComponent implements OnInit {
       })
       return convUsers
     })).subscribe((value: conversationInt[]) => {
-      console.log(value);
-
       this.data = value;
       this._change.markForCheck();
     })
 
-    this._chatService.getNewMessage().subscribe((message: messageInt | null) => {
-      if(message){
-        console.log(message);
-
-        this.messages.push(message);
-        this._change.markForCheck();
-      }
-    })
   }
 
   openConv(data: conversationInt){

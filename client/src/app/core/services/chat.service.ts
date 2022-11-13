@@ -4,41 +4,64 @@ import { messageInt } from './../interfaces/messageInt';
 import { newConvInt } from './../interfaces/newConvInt';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { io } from 'socket.io-client';
+import {io, Socket} from 'socket.io-client';
 import { BehaviorSubject } from 'rxjs';
+import {IoUserInt} from "../interfaces/ioUserInt";
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class ChatService {
-  public message$: BehaviorSubject<messageInt | null> = new BehaviorSubject<messageInt| null>(null!);
   constructor(private http: HttpClient) { }
 
   public socket = io('ws://localhost:8900');
 
-  public addUser(userId: string){    
+  public addUser(userId: string): Observable<IoUserInt[]>{
     this.socket.emit("addUser", userId);
+
+    // return this.socket.on("getUsers", (data: IoUserInt[]) => {
+    //   return data
+    // })
+    return new Observable((observer) => {
+      this.socket.on("getUsers", (data: IoUserInt[]) => {
+        observer.next(data)
+      })
+    })
+
   }
-  
+
+  public socketMessage(message: messageInt, receiverId: string){
+    console.log('gaeshva')
+    this.socket.emit('sendMessage', {
+        senderId: message.senderId,
+        receiverId: receiverId,
+        text: message.text
+      });
+    // return new Observable((observer) => {
+    //   this.socket.on('getMessage', (data: messageInt) => {
+    //     observer.next(data);
+    //   });
+    // });
+
+  }
+
 
 
   // this.socket.on("getUsers", users => {
   //   console.log(users);
-  // }) 
+  // })
 
-  
 
-  public getNewMessage = () => {
 
-    
-    this.socket.on("getMessage", (data) => {
-      console.log(12312312312);
-      this.message$.next(data);
-      
+  public getNewMessage(): Observable<messageInt>{
+    console.log(3123123);
+    return new Observable((observer) => {
+      this.socket.on("sendMessage", (data: messageInt) => {
+        console.log(data, '13123123124124124124124124fdasfafasf');
+        observer.next(data)
+      })
     })
-    
-    return this.message$.asObservable();
   };
 
 
@@ -50,14 +73,9 @@ export class ChatService {
     this.http.post("http://localhost:8800/api/conversations/", data);
   }
 
-  newMessage(message: messageInt, receiverId: string): Observable<messageInt>{
-    return this.http.post<messageInt>("http://localhost:8800/api/messages/", message).pipe((value) => {
-      this.socket.emit('sendMessage', {
-        senderId: message.senderId,
-        receiverId: receiverId,
-        text: message.text
-      });
-      return value
+  newMessage(message: messageInt, receiverId: string){
+    return this.http.post<messageInt>("http://localhost:8800/api/messages/", message).subscribe((value) => {
+      this.socketMessage(message, receiverId)
     })
   }
   getUserMessage(convesationId: string): Observable<messageInt[]>{

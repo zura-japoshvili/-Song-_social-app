@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, Output} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit, Output} from '@angular/core';
 import {conversationInt} from "../../../core/interfaces/conversationInt";
 import {messageInt} from "../../../core/interfaces/messageInt";
 import {FormControl, Validators} from "@angular/forms";
@@ -12,9 +12,9 @@ import { faSearch, faPaperPlane } from '@fortawesome/free-solid-svg-icons';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MessageChatComponent implements OnInit {
-  @Output() openChatInfo!: conversationInt
-  @Output() currentUserId!: string
-  @Output() messages!: messageInt[]
+  @Input() openChatInfo!: conversationInt;
+  @Input() currentUserId!: string;
+  @Input() messages!: messageInt[]
 
   public faPaperPlane = faPaperPlane;
 
@@ -25,6 +25,10 @@ export class MessageChatComponent implements OnInit {
               private _change: ChangeDetectorRef) { }
 
   ngOnInit(): void {
+    this._chatService.getNewMessage().subscribe((value) => {
+      this.messages.push(value);
+      this._change.markForCheck()
+    })
   }
 
 
@@ -34,11 +38,8 @@ export class MessageChatComponent implements OnInit {
         senderId: this.currentUserId,
         text: this.messageInput.value
       },
-      this.openChatInfo.user._id
-    ).subscribe((value) => {
-      this.messageInput.setValue('');
-      this.messages.push(value);
-      this._change.markForCheck();
-    })
-  }
+      this.openChatInfo.conversationId
+    )
+    }
+
 }

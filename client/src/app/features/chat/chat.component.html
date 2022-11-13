@@ -40,6 +40,7 @@
           <div class="timer">1 week</div>
         </div>
       </section>
-      <app-message-chat></app-message-chat>
+      <app-message-chat [currentUserId]="currentUserId" [openChatInfo]="openChatInfo" [messages]="messages" ></app-message-chat>
+      <app-users-list [currentUserId]="currentUserId"></app-users-list>
     </div>
   </div>

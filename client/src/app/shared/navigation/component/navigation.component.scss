@@ -13,6 +13,7 @@ $cubic-bezier: cubic-bezier(0.68, -0.55, 0.265, 1.55);
 header{
     height: 60px;
     position: relative;
+    z-index: 2;
     nav{
         top: 0;
         position: fixed;
@@ -125,4 +126,3 @@ header{
       transform: translate(0rem, 0);
     }
   }
-  
