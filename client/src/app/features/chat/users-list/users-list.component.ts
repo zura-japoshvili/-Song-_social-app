@@ -37,7 +37,7 @@ export class UsersListComponent implements OnInit {
     this._userService.getAllUsers().subscribe((value: userDataInt[]) => {
       for (let i = 0; i <= this.IoActiveUsers.length; i++){
         const user = value.find((value) => value._id === this.IoActiveUsers[0].userId && value._id !== this.currentUserId);
-        if (user)
+        if (user && !this.newList.includes(user))
           this.newList.push(user)
       }
       this._change.markForCheck();

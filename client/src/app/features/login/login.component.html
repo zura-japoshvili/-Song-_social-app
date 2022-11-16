@@ -3,13 +3,14 @@
     <form [formGroup]="regForm" class="signUp" [ngClass]="login ? 'inactive-sx' : 'active-sx'">
       <h1>Create New Account<span>.</span></h1>
       <p class="already">Already A Member <span (click)="clickForm()">Login in</span></p>
-      <div class="input"> 
+      <div class="input">
         <p>UserName</p>
         <div>
           <input formControlName="username" type="text">
           <fa-icon [icon]="faUser"></fa-icon>
         </div>
       </div>
+      <p class="alert" *ngIf="username.errors && username.touched">username must contain at least 8 characters</p>
       <div class="fullname-wrapper">
         <div>
           <p>First name</p>
@@ -26,20 +27,24 @@
           </div>
         </div>
       </div>
-      <div class="input"> 
+      <p class="alert" *ngIf="firstName.errors && firstName.touched">Firstname must contain at least 2 characters</p>
+      <p class="alert" *ngIf="lastName.errors && lastName.touched">lastname must contain at least 2 characters</p>
+      <div class="input">
         <p>Email</p>
         <div>
           <input formControlName="email" type="text">
           <fa-icon [icon]="faEnvelope"></fa-icon>
         </div>
       </div>
-      <div class="input"> 
+      <p class="alert" *ngIf="regEmail.errors && regEmail.touched">Please enter your email address</p>
+      <div class="input">
         <p>Password</p>
         <div>
           <input formControlName="password" type="password">
           <fa-icon [icon]="faKey"></fa-icon>
         </div>
       </div>
+      <p class="alert" *ngIf="regPass.errors && regPass.touched">The password must contain at least 8 characters</p>
       <button class="regBtn" (click)="onRegister()">Registration</button>
     </form>
     <form [formGroup]="loginForm" class="signIn" [ngClass]="login ? 'active-sx' : 'inactive-sx'">

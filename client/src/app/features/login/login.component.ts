@@ -21,31 +21,31 @@ export class LoginComponent implements OnInit {
   faEnvelope = faEnvelope
   faKey = faKey
   faUser = faUser
-  
+
   logEmailAlert = false;
   logPassAlert = false;
 
   login: boolean = false;
 
-  
-  
+
+
   public regForm = new FormGroup(
     {
-      username: new FormControl('', Validators.required),
-      firstName: new FormControl('', Validators.required),
-      lastName: new FormControl('', Validators.required),
-      email: new FormControl('', Validators.required),
-      password: new FormControl('', Validators.required)
+      username: new FormControl('', [Validators.required, Validators.minLength(6)]),
+      firstName: new FormControl('', [Validators.required, Validators.minLength(2)]),
+      lastName: new FormControl('', [Validators.required, Validators.minLength(2)]),
+      email: new FormControl('', [Validators.required, Validators.email]),
+      password: new FormControl('', [Validators.required, Validators.minLength(8)])
     }
-  ) 
+  )
 
   public loginForm = new FormGroup({
-    email: new FormControl('', Validators.required),
-    password: new FormControl('', Validators.required)
+    email: new FormControl('', [Validators.required, Validators.email]),
+    password: new FormControl('', [Validators.required, Validators.minLength(8)])
   })
 
   constructor(
-    private _userService: UserService, 
+    private _userService: UserService,
     private _change: ChangeDetectorRef,
     private _router: Router
     ) { }
@@ -59,9 +59,9 @@ export class LoginComponent implements OnInit {
   }
 
   public onRegister(){
-    this._userService.postUser(this.regForm.value as userRegInt).pipe( 
+    this._userService.postUser(this.regForm.value as userRegInt).pipe(
       tap((data) => {
-        
+
       }),
       catchError(err => {
         console.log('Whoops ://');
@@ -84,5 +84,22 @@ export class LoginComponent implements OnInit {
       })
     ).subscribe()
   }
-  
+
+  get regEmail() {
+    return this.regForm.get('email') as FormControl;
+  }
+  get regPass(){
+    return this.regForm.get('password') as FormControl;
+  }
+  get username(){
+    return this.regForm.get('username') as FormControl;
+  }
+  get firstName(){
+    return this.regForm.get('firstName') as FormControl;
+  }
+  get lastName(){
+    return this.regForm.get('lastName') as FormControl
+  }
+
+
 }
