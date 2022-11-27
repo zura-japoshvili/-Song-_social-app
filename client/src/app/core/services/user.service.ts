@@ -35,6 +35,10 @@ export class UserService {
     return this.http.get<userDataInt []>("http://localhost:8800/api/users/getAllUsers");
   }
 
+  public searchUser(name: string): Observable<userDataInt []>{
+    return this.http.get<userDataInt []>("http://localhost:8800/api/users/search/" + name)
+  }
+
   public loadUser(username: string): Observable<userDataInt> {
     return this.http.get<userDataInt>('http://localhost:8800/api/users/profile/'+ username).pipe(
       catchError(() => {

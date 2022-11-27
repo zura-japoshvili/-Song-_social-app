@@ -4,9 +4,17 @@
       <section class="discussions">
         <div class="discussion search">
           <div class="searchbar">
-            <fa-icon [icon]="faSearch"></fa-icon>
-            <input type="text" placeholder="Search...">
+            <fa-icon (click)="searchUsers()" [icon]="faSearch"></fa-icon>
+            <input type="text" placeholder="Search..." [formControl]="searchInput">
+            <fa-icon (click)="searchedUsers = []" *ngIf="searchedUsers.length !== 0" class="fa-X" [icon]="faX"></fa-icon>
           </div>
+          <ng-container *ngIf="searchedUsers.length !== 0">
+            <div class="search-wrapper">
+              <div  *ngFor="let user of searchedUsers" class="searched-users">
+                <p>{{user.firstName + " " + user.lastName}}</p>
+              </div>
+            </div>
+          </ng-container>
         </div>
         <ng-container *ngFor="let User of data">
           <div class="discussion message-active" (click)="openConv(User)">

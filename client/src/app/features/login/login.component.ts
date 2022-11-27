@@ -61,7 +61,7 @@ export class LoginComponent implements OnInit {
   public onRegister(){
     this._userService.postUser(this.regForm.value as userRegInt).pipe(
       tap((data) => {
-
+        this.login = true;
       }),
       catchError(err => {
         console.log('Whoops ://');

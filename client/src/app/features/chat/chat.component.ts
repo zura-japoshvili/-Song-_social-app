@@ -7,7 +7,7 @@ import { getConvInt } from '../../core/interfaces/getConvInt';
 import { combineLatest, forkJoin, map, Observable, tap } from 'rxjs';
 import { ChatService } from '../../core/services/chat.service';
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, Input, Output} from '@angular/core';
-import { faSearch, faPaperPlane } from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faX,faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-chat',
@@ -23,6 +23,7 @@ export class ChatComponent implements OnInit {
 
   // FontAwesome Icons
   public faSearch = faSearch;
+  public faX = faX;
 
 
 
@@ -32,9 +33,9 @@ export class ChatComponent implements OnInit {
   openChatInfo!: conversationInt
 
   public data!: conversationInt[]
+  public searchInput = new FormControl<string>("", Validators.required);
 
-
-
+  public searchedUsers: userDataInt[] = []
 
   ngOnInit(): void {
     forkJoin({
@@ -62,6 +63,16 @@ export class ChatComponent implements OnInit {
       this._change.markForCheck();
     })
 
+  }
+
+  searchUsers(){
+    this._userService.searchUser(this.searchInput.value as string).pipe(tap((data) => {
+
+    })).subscribe((value) =>{
+       this.searchedUsers = value
+        this._change.markForCheck();
+      }
+    )
   }
 
   openConv(data: conversationInt){

@@ -29,6 +29,33 @@ router.get("/profile/:userName", async (req, res) => {
     }
 })
 
+router.get('/search/:name', async (req, res) => {
+    console.log(req.params.name)
+    try {
+        const user = await User.find(
+            {
+                "$expr": {
+                    "$regexMatch": {
+                        "input": { "$concat": ["$firstName", " ", "$lastName"] },
+                        "regex": req.params.name,  //Your text search here
+                        "options": "i"
+                    }
+                }
+            }
+        )
+        console.log(user)
+        if (user.length === 0){
+            return res.status(404).json("Not Found")
+        }
+
+        res.status(200).json(user);
+
+    }catch (e) {
+        res.status(500).json(e);
+    }
+})
+
+
 // Get a user
 router.get("/", async (req, res) => {
     const userId = req.query.userId;

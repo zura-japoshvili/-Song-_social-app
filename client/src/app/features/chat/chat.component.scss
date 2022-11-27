@@ -76,6 +76,24 @@
                       align-items: center;
                       justify-content: center;
                       color: #E0E0E0;
+                      flex-direction: column;
+                      position: relative;
+                      .search-wrapper{
+                        top: 65px;
+                        position: absolute;
+                        width: 70%;
+                        display: flex;
+                        align-items: center;
+                        flex-direction: column;
+                        .searched-users{
+                          width: 100%;
+                          padding: 5px 0;
+                          background-color: #b4b1b1;
+                          border: 1px solid #578557;
+                          z-index: 10;
+                          margin-top: 5px;
+                        }
+                      }
                       .searchbar {
                           height: 40px;
                           background-color: #FFF;
@@ -86,6 +104,9 @@
                           display:flex;
                           align-items: center;
                           cursor: pointer;
+                        .fa-X{
+                          color: #ff5757;
+                        }
                           input {
                               outline: none;
                               margin-left: 15px;
