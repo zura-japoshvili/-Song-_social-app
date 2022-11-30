@@ -83,5 +83,24 @@ export class ChatComponent implements OnInit {
     })
   }
 
+  newConv(userData: userDataInt){
+    const checker = this.data.find((value) => value.user._id === userData._id);
+    console.log(checker)
+    if (!checker){
+      console.log('ooppsss')
+      this._chatService.newConversation({senderId: this.currentUserId, receiverId: userData._id}).subscribe(
+        (value) => {
+          this.data.push({conversationId: value._id, user: userData})
+        }
+      );
+    }
+    else {
+      this._chatService.findConv(this.currentUserId, userData._id).subscribe(
+        (value) => {
+          this.openConv({conversationId: value._id, user: userData});
+        }
+      )
+    }
+  }
 
 }

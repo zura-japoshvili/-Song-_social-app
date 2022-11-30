@@ -69,9 +69,13 @@ export class ChatService {
   getConversations(userId: string): Observable<getConvInt[]>{
     return this.http.get<getConvInt[]>("http://localhost:8800/api/conversations/"+ userId);
   }
-  newConversation(data: newConvInt){
-    this.http.post("http://localhost:8800/api/conversations/", data);
+  newConversation(data: newConvInt): Observable<getConvInt>{
+    return this.http.post<getConvInt>("http://localhost:8800/api/conversations/", data);
   }
+  findConv(firstUserId: string, secondUserId: string): Observable<getConvInt>{
+    return this.http.get<getConvInt>(`http://localhost:8800/api/conversations/find/${firstUserId}/${secondUserId}`)
+  }
+
 
   newMessage(message: messageInt, receiverId: string){
     return this.http.post<messageInt>("http://localhost:8800/api/messages/", message).subscribe((value) => {
@@ -81,4 +85,6 @@ export class ChatService {
   getUserMessage(convesationId: string): Observable<messageInt[]>{
     return this.http.get<messageInt []>("http://localhost:8800/api/messages/" + convesationId);
   }
+
+
 }
