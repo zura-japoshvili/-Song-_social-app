@@ -3,10 +3,9 @@ import { messageInt } from '../../core/interfaces/messageInt';
 import { conversationInt } from '../../core/interfaces/conversationInt';
 import { UserService } from '../../core/services/user.service';
 import { userDataInt } from '../../core/interfaces/userDataInt';
-import { getConvInt } from '../../core/interfaces/getConvInt';
 import { combineLatest, forkJoin, map, Observable, tap } from 'rxjs';
 import { ChatService } from '../../core/services/chat.service';
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, Input, Output} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import { faSearch, faX,faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
@@ -60,6 +59,9 @@ export class ChatComponent implements OnInit {
       return convUsers
     })).subscribe((value: conversationInt[]) => {
       this.data = value;
+      if (this.data.length !== 0){
+        this.openConv(this.data[0]);
+      }
       this._change.markForCheck();
     })
 

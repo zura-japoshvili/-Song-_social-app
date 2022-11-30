@@ -3,7 +3,19 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  > h1{
+    background-color: rgba(30, 84, 19, 0.71);
+    border: 2px solid #00ad1e;
+    border-top: none;
+    width: 100%;
+    color: #49ff50;
+    padding: 10px 0;
+    text-align: center;
+    border-radius: 0 0 80% 80%;
+  }
   .user-item{
+    margin-top: 5px;
+    cursor: pointer;
     width: 300px;
     display: flex;
     justify-content: space-between;
@@ -18,18 +30,9 @@
       color: #504242;
     }
     .active{
-      color: #38c04a;
-      background-color: #858586;
-      border-radius: 10px;
-      padding: 5px 3px;
-      display: flex;
-      height: 30px;
-      width: 70px;
-      font-size: 16px;
-      justify-content: space-between;
-      align-items: center;
+      color: #00ad1e;
       .active-icon{
-        color: #69df6f;
+        color: #07d212;
         font-size: 14px;
       }
     }

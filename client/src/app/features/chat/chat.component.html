@@ -11,13 +11,15 @@
           <ng-container *ngIf="searchedUsers.length !== 0">
             <div class="search-wrapper">
               <div (click)="newConv(user)"  *ngFor="let user of searchedUsers" class="searched-users">
+                <img class="photo" [src]="user.profilePicture ? user.profilePicture : '../../../../assets/public/images/default-user-img.png'" alt="">
+                <p class="username"># {{user.username}}</p>
                 <p>{{user.firstName + " " + user.lastName}}</p>
               </div>
             </div>
           </ng-container>
         </div>
         <ng-container *ngFor="let User of data">
-          <div class="discussion message-active" (click)="openConv(User)">
+          <div class="discussion" [ngClass]="User.user._id === openChatInfo.user._id ? ' message-active' : '' " (click)="openConv(User)">
             <img class="photo" [src]="User.user.profilePicture ? User.user.profilePicture : '../../../../assets/public/images/default-user-img.png'" alt="">
             <div class="desc-contact">
               <p class="name">{{ User.user.firstName +  " " + User.user.lastName }}</p>
