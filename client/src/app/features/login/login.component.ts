@@ -25,6 +25,9 @@ export class LoginComponent implements OnInit {
   logEmailAlert = false;
   logPassAlert = false;
 
+  regEmailAlert = false;
+  regUsername = false;
+
   login: boolean = false;
 
 
@@ -64,7 +67,10 @@ export class LoginComponent implements OnInit {
         this.login = true;
       }),
       catchError(err => {
-        console.log('Whoops ://');
+        err.error == 'this email is already exists !' ? this.regEmailAlert = true : this.regEmailAlert = false;
+        err.error == 'This username is already exists !' ? this.regUsername = true : this.regUsername = false;
+        console.log(this.regEmailAlert)
+        this._change.markForCheck();
         return of([]);
       })
     ).subscribe();

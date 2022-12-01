@@ -14,13 +14,7 @@ export class UserService {
   constructor(private http: HttpClient) { }
 
   public postUser(data: userRegInt): Observable<userDataInt> {
-    return this.http.post<userDataInt>('http://localhost:8800/api/auth/register/', data).pipe(
-      catchError(() => {
-        return throwError(() => {
-          return new Error('Something Went Wrong');
-        })
-      })
-    );
+    return this.http.post<userDataInt>('http://localhost:8800/api/auth/register/', data);
   }
 
   public getUser(data: loginInt): Observable<userDataInt> {

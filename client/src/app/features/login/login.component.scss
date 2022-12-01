@@ -37,6 +37,9 @@
         border-radius: 18px;
         color: #fff;
         border: none;
+        &:disabled{
+          background-color: #c92918;
+        }
       }
       input{
         border: none;
@@ -82,7 +85,7 @@
             color: #a4a8af;
             font-size: 17px;
           }
-        }     
+        }
       }
       .fullname-wrapper{
         display: flex;
@@ -122,25 +125,25 @@
     .signUp {
       z-index: 2;
     }
-    
+
     .active-dx{
       animation-name: foregrounding-dx;
       animation-duration: 0.9s;
       animation-fill-mode: forwards;
     }
-    
+
     .active-sx{
       animation-name: foregrounding-sx;
       animation-duration: 0.9s;
       animation-fill-mode: forwards;
     }
-    
+
     .inactive-dx{
       animation-name: overshadowing-dx;
       animation-duration: 0.9s;
       animation-fill-mode: forwards;
     }
-    
+
     .inactive-sx{
         animation-name: overshadowing-sx;
         animation-duration: 0.9s;
@@ -153,7 +156,7 @@
 
 
 
-  
+
   @keyframes overshadowing-dx {
     0%{
       z-index:2;
@@ -168,7 +171,7 @@
       box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.25);
     }
   }
-  
+
   @keyframes overshadowing-sx {
     0%{
       z-index:2;
@@ -183,7 +186,7 @@
       box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.25);
     }
   }
-  
+
   @keyframes foregrounding-dx {
     0%{
       z-index:1;
@@ -200,7 +203,7 @@
       opacity: 1;
     }
   }
-  
+
   @keyframes foregrounding-sx {
     0%{
       z-index:1;

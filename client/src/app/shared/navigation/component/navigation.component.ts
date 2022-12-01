@@ -14,6 +14,7 @@ export class NavigationComponent implements OnInit {
   user: userDataInt = JSON.parse(localStorage.getItem('User')!);
 
   ngOnInit(): void {
+    console.log(this.user)
   }
 
   public onLogOut(){

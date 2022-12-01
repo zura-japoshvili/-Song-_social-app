@@ -11,6 +11,7 @@
         </div>
       </div>
       <p class="alert" *ngIf="username.errors && username.touched">username must contain at least 8 characters</p>
+      <p class="alert" *ngIf="regUsername">This username is already exists !</p>
       <div class="fullname-wrapper">
         <div>
           <p>First name</p>
@@ -37,6 +38,7 @@
         </div>
       </div>
       <p class="alert" *ngIf="regEmail.errors && regEmail.touched">Please enter your email address</p>
+      <p class="alert" *ngIf="regEmailAlert">this email is already exists !</p>
       <div class="input">
         <p>Password</p>
         <div>
@@ -45,7 +47,7 @@
         </div>
       </div>
       <p class="alert" *ngIf="regPass.errors && regPass.touched">The password must contain at least 8 characters</p>
-      <button class="regBtn" (click)="onRegister()">Registration</button>
+      <button class="regBtn" (click)="onRegister()" [disabled]="regForm.invalid">Registration</button>
     </form>
     <form [formGroup]="loginForm" class="signIn" [ngClass]="login ? 'active-sx' : 'inactive-sx'">
       <h1>Sign in to your account<span>.</span></h1>
@@ -66,7 +68,7 @@
         </div>
       </div>
       <p *ngIf="logPassAlert"  class="alert">Password is incorrect</p>
-      <button class="regBtn" (click)="onLogin()">Sign In</button>
+      <button class="regBtn" (click)="onLogin()" [disabled]="loginForm.invalid">Sign In</button>
     </form>
 </div>
 </div>

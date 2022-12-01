@@ -5,6 +5,15 @@ const bcrypt = require('bcryptjs');
 router.post('/register', async (req, res) => {
     console.log(req.body);
     try {
+
+        const checkEmail = await User.findOne( { email: req.body.email });
+        const checkUsername = await User.findOne( {username: req.body.username} )
+        if (checkEmail){
+            return res.status(400).json("this email is already exists !");
+        }
+        else if (checkUsername){
+            return res.status(400).json("This username is already exists !");
+        }
         const salt = await bcrypt.genSalt(10);
         const hashedPass = await bcrypt.hash(req.body.password, salt);
 
