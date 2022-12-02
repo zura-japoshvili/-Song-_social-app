@@ -52,7 +52,12 @@ const upload = multer({storage: storage});
 
 
 app.post('/api/upload', upload.single('image'), (req, res) => {
-  res.status(200).json('nice');
+  try{
+    res.status(200).json('nice');
+  }catch (e) {
+
+  }
+
 })
 
 app.use("/api/auth", authRoute);

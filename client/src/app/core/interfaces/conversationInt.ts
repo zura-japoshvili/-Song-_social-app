@@ -11,6 +11,12 @@ export interface conversationInt {
         coverPicture: string,
         followers: [],
         followings: [],
-        isAdmin: boolean
+        isAdmin: boolean,
+        desc: string,
+        lives: string,
+        from: string,
+        relationship: boolean,
+        active: boolean,
+        lastActive: string
     }
 }

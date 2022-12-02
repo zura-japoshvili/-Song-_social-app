@@ -54,15 +54,18 @@ const userSchema = new mongoose.Schema (
           },
           desc: {
             type: String,
-            max: 50,
+            max: 250,
           },
-          city: {
+          lives: {
             type: String,
             max: 50,
           },
           from: {
             type: String,
             max: 50,
+          },
+          relationship: {
+            type: Boolean
           },
           active: {
             type: Boolean

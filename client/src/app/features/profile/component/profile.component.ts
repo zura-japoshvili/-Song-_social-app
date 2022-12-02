@@ -17,6 +17,7 @@ export class ProfileComponent implements OnInit {
               private _change: ChangeDetectorRef) { }
 
   public userData!: userDataInt;
+  user: userDataInt = JSON.parse(localStorage.getItem('User')!);
 
   ngOnInit(): void {
     this.userName = this.route.snapshot.paramMap.get('username')!;
