@@ -12,6 +12,7 @@ const conversationRoute = require("./routes/conversations");
 const messageRoute = require("./routes/messages");
 const router = express.Router();
 const path = require("path");
+const User = require('./models/User');
 
 dotenv.config();
 
@@ -51,13 +52,20 @@ const storage = multer.diskStorage({
 const upload = multer({storage: storage});
 
 
-app.post('/api/upload', upload.single('image'), (req, res) => {
-  try{
-    res.status(200).json('nice');
-  }catch (e) {
-
+app.post('/api/upload',   upload.single('image'), (req, res) => {
+  const imgPath = req.file.path;
+  const userId = req.body.id;
+  const updatedPath = async (userId, imgPath) => {
+    try {
+      const newUserImg = await User.findByIdAndUpdate({_id: userId}, {profilePicture: imgPath});
+      console.log(newUserImg.profilePicture)
+      res.status(200).json(newUserImg.profilePicture)
+    }catch (e) {
+      res.status(500).json("Oops");
+    }
   }
 
+  updatedPath(userId, imgPath);
 })
 
 app.use("/api/auth", authRoute);
