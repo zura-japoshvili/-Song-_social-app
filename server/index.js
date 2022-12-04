@@ -53,15 +53,16 @@ const upload = multer({storage: storage});
 
 
 app.post('/api/upload',   upload.single('image'), (req, res) => {
-  const imgPath = req.file.path;
+  const imgPath = req.file.path.slice(11);
   const userId = req.body.id;
+  console.log(imgPath)
   const updatedPath = async (userId, imgPath) => {
     try {
       const newUserImg = await User.findByIdAndUpdate({_id: userId}, {profilePicture: imgPath});
       console.log(newUserImg.profilePicture)
       res.status(200).json(newUserImg.profilePicture)
     }catch (e) {
-      res.status(500).json("Oops");
+      res.status(500).json("Oops something went wrong !");
     }
   }
 

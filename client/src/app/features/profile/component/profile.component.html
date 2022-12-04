@@ -1,13 +1,19 @@
 <main>
-    <div class="top-bar">
-        <img class="profile-bg" src="https://www.iekakmi-roadtrips.gr/plugins/fullpage/examples/imgs/bg3.jpg">
-        <div class="logo-name-wrapper">
-            <img src="https://static.tvtropes.org/pmwiki/pub/images/abcb6534_7913_4eb1_a7a5_62b081ebc628.png" alt="pic">
-            <h2>{{userData.firstName + " " + userData.lastName}}</h2>
-        </div>
-    </div>
+  <div [@SlideOutAnimation]="isOpen ? 'open' : 'closed'" class="error-cont">
+    <p>{{errorText}}</p>
+  </div>
+  <div class="top-bar">
+      <img class="profile-bg" src="https://www.iekakmi-roadtrips.gr/plugins/fullpage/examples/imgs/bg3.jpg">
+      <div class="logo-name-wrapper">
+          <form method="post">
+            <label for="image"><fa-icon class="fa-pen" [icon]="faPenToSquare"></fa-icon></label>
+            <input type="file" name="image" id="image" (change)="uploadPic($event)" hidden>
+          </form>
+          <img [src]="userData.profilePicture ? '../../../../../../' + userData.profilePicture : '../../../../../../assets/public/images/default-user-img.png'" alt="pic">
+          <h2>{{userData.firstName + " " + userData.lastName}}</h2>
+      </div>
+  </div>
+  <button (click)="toggle()">shaasdas</button>
+
 </main>
 
-<form method="post">
-    <input type="file" name="image" (change)="uploadPic($event)">
-</form>

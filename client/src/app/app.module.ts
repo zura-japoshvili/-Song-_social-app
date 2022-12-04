@@ -8,6 +8,8 @@ import {LoginComponent} from "./features/login/login.component";
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import {ReactiveFormsModule} from "@angular/forms";
 import { NotFoundComponent } from './shared/not-found/not-found.component';
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -20,7 +22,8 @@ import { NotFoundComponent } from './shared/not-found/not-found.component';
     AppRoutingModule,
     HttpClientModule,
     FontAwesomeModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

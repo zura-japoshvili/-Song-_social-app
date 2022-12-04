@@ -3,7 +3,7 @@
         <button class="logout" (click)="onLogOut()">Log Out</button>
         <div class="user-info">
             <p [routerLink]="'/profile/'+ user.username">{{ user.firstName +" "+ user.lastName}}</p>
-            <img [src]="user.profilePicture ? user.profilePicture : '../../../../assets/public/images/default-user-img.png'">
+            <img [src]="user.profilePicture ? '../../../../' + user.profilePicture : '../../../../assets/public/images/default-user-img.png'">
         </div>
     </nav>
 </header>
